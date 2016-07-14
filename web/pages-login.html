@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" class="body-full-height">
+    <head>        
+        <!-- META SECTION -->
+        <title>LOGIN</title>            
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+   
+        <link rel="icon" href="favicon.ico" type="image/x-icon" />
+        <!-- END META SECTION -->
+        
+        <!-- CSS INCLUDE -->        
+        <link rel="stylesheet" type="text/css" id="theme" href="css/theme-default.css"/>
+        <!-- EOF CSS INCLUDE -->                                    
+    </head>
+    <body>
+        
+        <div class="login-container">
+        
+            <div class="login-box animated fadeInDown">
+               <img src="img/sigeme.jpg">
+               <br></br>
+                <div class="login-body">
+                    <div class="login-title"><strong>Bienvenido</strong>, Por favor loggearse</div>
+                    <form class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <input type="text" class="form-control" id= "id"placeholder="Username"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            <input type="password" class="form-control" id= "contrasena"placeholder="Password"/>
+                        </div>
+                    </div>
+                      </form>
+                    <div class="form-group">
+                        <div class="col-md-6">
+                            <a href="#" class="btn btn-link btn-block">Forgot your password?</a>
+                        </div>
+                        <div class="col-md-6">
+                            <button class="btn btn-info btn-block"  onclick="return setAction();">Log In</button>
+                        </div>
+                    </div>
+                  
+                </div>
+                <div class="login-footer">
+                    <div class="pull-left">
+                        &copy; UNA SIGEME
+                    </div>
+                    <div class="pull-right">
+                        <a href="#">Sobre nosotros</a> |
+                        <a href="#">Privacidad</a> |
+                        <a href="#">Contactenos</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+  <!-- MESSAGE BOX NO SE PUDO -->
+        <div class="message-box animated fadeIn" data-sound="alert" id="mb-usuario">
+            <div class="mb-container">
+                <div class="mb-middle">
+                    <div class="mb-title"><span class="fa fa-frown-o"></span> Error <strong> No existe el usuario!</strong></div>
+                    <div class="mb-content">
+                        <p>Registro incorrecto!</p>                    
+                        <p>El registro esta mal, revise que su ID y Contraseña son correctos, de lo contrario hable con el admin.</p>
+                    </div>
+                    <div class="mb-footer">
+                        <div class="pull-right">
+                       
+                            <button class="btn btn-default  btn-lg" data-dismiss="modal">OK</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<!-- END MESSAGE BOX  NO SE PUDO-->
+         <script type="text/javascript" src="js/plugins/jquery/jquery.min.js"></script>
+                <script type="text/javascript" src="js/plugins/jquery/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="js/plugins/bootstrap/bootstrap.min.js"></script>   
+            <script src="jsObject/Usuario.js"></script>
+        <script src="jsObject/BaseDatos.js"></script>
+        <script src="jsObject/Proxy.js"></script>
+          <script src="jsObject/FormInfo.js"></script>
+        <script src="jsObject/Trabajador.js"></script>
+          <script src="jsObject/FormAdmin.js"></script>
+           <script src="jsObject/CalendarDTO.js"></script>
+   
+<script type="text/javascript">
+
+  function setAction(){
+
+    usuario = new Usuario($("#id").val(),$("#contrasena").val(),0);
+            Proxy.userLogin(usuario,
+                function(usuario){
+                       
+                    switch(usuario.tipo){
+                       
+                        case 0: // usuario no existe
+                           $('#mb-usuario').modal('show'); 
+                             document.location ='#';
+                            break;
+                        case 1: // paciente
+                                    document.location =  'index.jsp';
+                        // alert("bienvenido "+usuario.toString());
+                         break;
+                        case 2: // medico
+                          document.location = "index.jsp";
+                             break;
+                        case 3: // admin
+                           document.location ='index.jsp';
+                         //alert("bienvenido "+usuario.toString());  
+                          break;
+                        
+                    }
+  
+
+        });
+  }
+</script>
+  </body>
+</html>
+
+
+
+
+
+

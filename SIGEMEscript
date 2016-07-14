@@ -1,0 +1,148 @@
+drop DATABASE sigeme;
+create database sigeme;
+use sigeme;
+
+	create table Trabajadores (
+    cedula varchar(30) not null,
+    nombre varchar(40) not null,
+    fechaNacimiento date not null,
+    puesto varchar(20),
+    telefono varchar(20),
+    email varchar(50),
+    sexo varchar(1),
+    profesion varchar(50),
+    fechaIngreso date not null,
+    Primary Key (cedula)
+)ENGINE=InnoDB;
+
+create table Usuarios (
+    id varchar(30) not null,
+    clave varchar(30) not null,
+    tipo varchar(10) not null,
+    PRIMARY KEY (id)
+) ENGINE=InnoDB;
+
+create table Form_administrativos (
+    numero_expediente int not null,
+    nombre varchar(40) not null,
+    fecha_asignacion date not null,
+    cedula_trabajador varchar(30) not null,
+    fechaEntrega date not null,
+    PRIMARY KEY (numero_expediente)
+) ENGINE=InnoDB;
+
+create table Form_info_personal (
+    numero_expediente int not null,
+	cedula varchar(40),
+    fecha_nacimiento date,
+    sexo varchar(1),
+    telefono varchar(20),
+    nombre_encargado varchar(40),
+    cedula_encargado varchar(30),
+	nacionalidad varchar(40),
+    PRIMARY KEY (numero_expediente)
+) ENGINE=InnoDB;
+
+create table Asesorias (
+    numero_asesoria int not null,
+	lugar varchar(20),
+	fecha date,
+	tipo varchar(20),
+    PRIMARY KEY (numero_asesoria)
+) ENGINE=InnoDB;
+
+create table Asesorias_Trabajadores(
+    numero_asesoria int not null,
+	cedula_trabajador varchar(20)
+) ENGINE=InnoDB;
+
+
+-- en la tabla eventos si el idTrabjador es general signfica que es un evento al q todos tienen acceso
+-- si tiene un ID solo podria ser visible por ese trabajdor como el caso de los casos 
+
+CREATE TABLE events (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `description` text NOT NULL,
+  `color` varchar(7) NOT NULL DEFAULT '#3a87ad',
+  `date` datetime NOT NULL,
+  idTrabajador varchar(20) NOT NULL DEFAULT 'general',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+-- asignación de constraints
+
+Alter table Form_administrativos
+	ADD constraint Form_administrativos_fk1
+	foreign key (cedula_trabajador) references Trabajadores(cedula);
+
+Alter table Form_info_personal
+	ADD constraint Form_info_personal_fk1
+	foreign key (numero_expediente) references Form_administrativos(numero_expediente);
+
+Alter table Usuarios ADD constraint Usuarios_fk1
+	foreign key (id) references Trabajadores(cedula);
+
+Alter table Asesorias_Trabajadores ADD constraint Asesorias_Trabajadores_fk1
+	foreign key (cedula_trabajador) references Trabajadores(cedula);
+
+Alter table Asesorias_Trabajadores ADD constraint Asesorias_Trabajadores_fk2
+	foreign key (numero_asesoria) references Asesorias(numero_asesoria);
+
+-- triggers y funciones
+		DELIMITER $$
+        create trigger Form_administrativos_ins after insert on Form_administrativos
+        FOR EACH ROW
+         BEGIN
+		INSERT INTO events(title,description,date,idTrabajador)
+		VALUES(NEW.nombre,NEW.numero_expediente,NEW.fechaEntrega,NEW.cedula_trabajador);
+        INSERT INTO Form_info_personal(numero_expediente,cedula,fecha_nacimiento,sexo,telefono)
+		VALUES(NEW.numero_expediente,"",curdate(),"","");
+         END; $$
+         DELIMITER ;
+		
+		
+	
+
+-- insert de prueba
+insert into Trabajadores(cedula,nombre,fechaNacimiento,telefono,email,sexo,profesion,fechaIngreso,puesto)
+values ('001','Esmirna Sanchez',curdate(),'132','a@gmail.com','M','Ingeniero',curdate()-3,'Jefe');
+insert into Trabajadores(cedula,nombre,fechaNacimiento,telefono,email,sexo,profesion,fechaIngreso,puesto)
+values ('002','juanita',curdate(),'132','a@gmail.com','F','TS',curdate()-3,'subjefe');
+insert into Trabajadores(cedula,nombre,fechaNacimiento,telefono,email,sexo,profesion,fechaIngreso,puesto)
+values ('003','alberto',curdate(),'132','a@gmail.com','M','Psicologo',curdate()-3,'trabajador social');
+
+insert into Usuarios (id,clave,tipo) values ('001','001', 1);
+insert into Usuarios (id,clave,tipo) values ('002','002', 2);
+insert into Usuarios (id,clave,tipo) values ('003','003', 3);
+
+insert into Form_administrativos(numero_expediente,nombre,fecha_asignacion,cedula_trabajador,fechaEntrega) values(321,'pedrito','2016-10-05','001',curdate());
+insert into Form_administrativos(numero_expediente,nombre,fecha_asignacion,cedula_trabajador,fechaEntrega) values(325,'albertico',curdate(),'001',curdate());
+insert into Form_administrativos(numero_expediente,nombre,fecha_asignacion,cedula_trabajador,fechaEntrega) values(324,'pedrita',curdate(),'002',curdate());
+
+insert into Asesorias(numero_asesoria,lugar,fecha,tipo) values(25,'perez',curdate(),'normal');
+insert into Asesorias_Trabajadores(numero_asesoria,cedula_trabajador) values(25,'001');
+insert into Asesorias_Trabajadores(numero_asesoria,cedula_trabajador) values(25,'002');
+
+	INSERT INTO `events` (`id`, `title`, `description`, `color`, `date`) VALUES
+(1, 'Event 12', 'hola', '#f00877', '2016-10-05 02:44:00'),
+(2, 'Event 23', 'aa', '#08aaf0', '2016-10-08 02:44:00'),
+(3, 'Event 31', 'an', '#08f049', '2016-10-22 02:45:00'),
+(4, 'Event 42', 'a', '#ddf008', '2016-10-31 02:45:00');
+
+INSERT INTO `events` ( `title`, `description`, `color`, `date`) VALUES
+( 'Event 5', 'Tds', '#f00877', now());  
+
+
+
+-- pruebas
+
+update Form_info_personal set cedula='11613006' where numero_expediente= 321 ;
+
+select  * from Form_administrativos;
+select  * from Form_info_personal;
+select  * from Trabajadores;
+select  * from Usuarios;
+select * from events where idTrabajador='001';
+select  p.nombre, e.numero_expediente from Form_administrativos p inner join Form_info_personal e where p.numero_expediente=e.numero_expediente;
+select  x.nombre, e.cedula_trabajador, p.numero_asesoria, p.lugar from Asesorias_Trabajadores e, Asesorias p, Trabajadores x where e.numero_asesoria= p.numero_asesoria and x.cedula= e.cedula_trabajador;
