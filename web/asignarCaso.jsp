@@ -64,7 +64,7 @@
                                                         <span class="input-group-addon"><span class="fa fa-pencil"></span></span>
                                                         <input type="text" class="form-control" ng-model="current.expediente" ng-disabled="mode=='update'"/>
                                                     </div>                                            
-                                                    <span class="help-block">escriba el # de expediente</span>
+                                                    <span class="help-block">escriba el # de expediente (por ahora se le asigna uno automaticamente)</span>
                                                 </div>
                                             </div>
                                             <div class="form-group">

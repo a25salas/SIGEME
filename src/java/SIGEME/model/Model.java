@@ -191,9 +191,9 @@ int count= db.executeUpdate(sql);
     // FormAdmin
     
     public static int addFormAdmin(FormAdmin p) {
-            String sql= "insert into Form_administrativos(numero_expediente,nombre,fecha_asignacion,cedula_trabajador,fechaEntrega)"+
-                    "values (%s,'%s','%s','%s','%s')";
-       sql= String.format(sql, p.getExpediente(),p.getNombre(),new SimpleDateFormat("yyyy-MM-dd").format(p.getFechaAsignacion()),p.getTrabajador().getCedula(),
+            String sql= "insert into Form_administrativos(nombre,fecha_asignacion,cedula_trabajador,fechaEntrega)"+
+                    "values ('%s','%s','%s','%s')";
+       sql= String.format(sql,p.getNombre(),new SimpleDateFormat("yyyy-MM-dd").format(p.getFechaAsignacion()),p.getTrabajador().getCedula(),
                new SimpleDateFormat("yyyy-MM-dd").format(p.getFechaAsignacion()));
        int count= db.executeUpdate(sql);
        
@@ -220,6 +220,7 @@ int count= db.executeUpdate(sql);
        return prods;
     }
     
+    // el siguiente metodo se refire a buscar los formularios q le pertenecen al trabjador en sesion
     public static List<FormAdmin> formAdminSearchSession(String criteria, String id) throws Exception {
                List<FormAdmin> prods;
        prods= new ArrayList();

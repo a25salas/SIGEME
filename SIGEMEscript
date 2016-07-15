@@ -23,7 +23,7 @@ create table Usuarios (
 ) ENGINE=InnoDB;
 
 create table Form_administrativos (
-    numero_expediente int not null,
+    numero_expediente int not null AUTO_INCREMENT ,
     nombre varchar(40) not null,
     fecha_asignacion date not null,
     cedula_trabajador varchar(30) not null,
@@ -44,7 +44,7 @@ create table Form_info_personal (
 ) ENGINE=InnoDB;
 
 create table Asesorias (
-    numero_asesoria int not null,
+    numero_asesoria int not null AUTO_INCREMENT,
 	lugar varchar(20),
 	fecha date,
 	tipo varchar(20),
@@ -101,9 +101,6 @@ Alter table Asesorias_Trabajadores ADD constraint Asesorias_Trabajadores_fk2
          END; $$
          DELIMITER ;
 		
-		
-	
-
 -- insert de prueba
 insert into Trabajadores(cedula,nombre,fechaNacimiento,telefono,email,sexo,profesion,fechaIngreso,puesto)
 values ('001','Esmirna Sanchez',curdate(),'132','a@gmail.com','M','Ingeniero',curdate()-3,'Jefe');
@@ -116,14 +113,18 @@ insert into Usuarios (id,clave,tipo) values ('001','001', 1);
 insert into Usuarios (id,clave,tipo) values ('002','002', 2);
 insert into Usuarios (id,clave,tipo) values ('003','003', 3);
 
-insert into Form_administrativos(numero_expediente,nombre,fecha_asignacion,cedula_trabajador,fechaEntrega) values(321,'pedrito','2016-10-05','001',curdate());
-insert into Form_administrativos(numero_expediente,nombre,fecha_asignacion,cedula_trabajador,fechaEntrega) values(325,'albertico',curdate(),'001',curdate());
-insert into Form_administrativos(numero_expediente,nombre,fecha_asignacion,cedula_trabajador,fechaEntrega) values(324,'pedrita',curdate(),'002',curdate());
-insert into Form_administrativos(numero_expediente,nombre,fecha_asignacion,cedula_trabajador,fechaEntrega) values(326,'ali',curdate(),'001',curdate());
+insert into Form_administrativos(nombre,fecha_asignacion,cedula_trabajador,fechaEntrega) values('pedrito','2016-10-05','001',curdate());
+insert into Form_administrativos(nombre,fecha_asignacion,cedula_trabajador,fechaEntrega) values('albertico',curdate(),'001',curdate());
+insert into Form_administrativos(nombre,fecha_asignacion,cedula_trabajador,fechaEntrega) values('pedrita',curdate(),'002',curdate());
+insert into Form_administrativos(nombre,fecha_asignacion,cedula_trabajador,fechaEntrega) values('ali',curdate(),'001',curdate());
 
-insert into Asesorias(numero_asesoria,lugar,fecha,tipo) values(25,'perez',curdate(),'normal');
-insert into Asesorias_Trabajadores(numero_asesoria,cedula_trabajador) values(25,'001');
-insert into Asesorias_Trabajadores(numero_asesoria,cedula_trabajador) values(25,'002');
+insert into Asesorias(lugar,fecha,tipo) values('perez',curdate(),'normal');
+insert into Asesorias_Trabajadores(numero_asesoria,cedula_trabajador) values(1,'001');
+insert into Asesorias_Trabajadores(numero_asesoria,cedula_trabajador) values(1,'002');
+
+insert into Asesorias(lugar,fecha,tipo) values('San Ramon',curdate(),'normal');
+insert into Asesorias_Trabajadores(numero_asesoria,cedula_trabajador) values(2,'002');
+insert into Asesorias_Trabajadores(numero_asesoria,cedula_trabajador) values(2,'003');
 
 	INSERT INTO `events` (`id`, `title`, `description`, `color`, `date`) VALUES
 (1, 'Event 12', 'hola', '#f00877', '2016-10-05 02:44:00'),
@@ -134,11 +135,11 @@ insert into Asesorias_Trabajadores(numero_asesoria,cedula_trabajador) values(25,
 INSERT INTO `events` ( `title`, `description`, `color`, `date`) VALUES
 ( 'Event 5', 'Tds', '#f00877', now());  
 
-update Form_info_personal set cedula='11613006' where numero_expediente= 321 ;
-update Form_info_personal set sexo='M' where numero_expediente= 321 ;
-update Form_info_personal set sexo='F' where numero_expediente= 324 ;
-update Form_info_personal set sexo='M' where numero_expediente= 325 ;
-update Form_info_personal set sexo='M' where numero_expediente= 326 ;
+update Form_info_personal set cedula='11613006' where numero_expediente= 1 ;
+update Form_info_personal set sexo='M' where numero_expediente= 1 ;
+update Form_info_personal set sexo='F' where numero_expediente= 2 ;
+update Form_info_personal set sexo='M' where numero_expediente= 3 ;
+update Form_info_personal set sexo='M' where numero_expediente= 4 ;
 -- pruebas
 
 
@@ -147,8 +148,11 @@ select  * from Form_administrativos;
 select  * from Form_info_personal;
 select  * from Trabajadores;
 select  * from Usuarios;
+select * from Asesorias;
 select * from events where idTrabajador='001';
 select  p.nombre, e.numero_expediente from Form_administrativos p inner join Form_info_personal e where p.numero_expediente=e.numero_expediente;
 select  x.nombre, e.cedula_trabajador, p.numero_asesoria, p.lugar from Asesorias_Trabajadores e, Asesorias p, Trabajadores x where e.numero_asesoria= p.numero_asesoria and x.cedula= e.cedula_trabajador;
 
-select  p.fecha_asignacion, COUNT(e.numero_expediente), e.sexo from Form_administrativos p inner join Form_info_personal e where p.numero_expediente=e.numero_expediente and e.sexo= 'M';
+select  COUNT(e.numero_expediente),p.fecha_asignacion, e.numero_expediente, e.sexo from Form_administrativos p inner join Form_info_personal e where p.numero_expediente=e.numero_expediente and e.sexo= 'M';
+
+select e.nombre, a.lugar,a.numero_asesoria from Asesorias_Trabajadores a1,Asesorias a,Trabajadores e where  a1.numero_asesoria=a.numero_asesoria and a1.cedula_trabajador = e.cedula; 
