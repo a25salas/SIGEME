@@ -382,6 +382,31 @@ String sql= "   SELECT COUNT(numero_expediente) canti from Form_administrativos 
         return resultado;
 
     }
+    
+       public static Float obtenerCantidadHombres(int mes, int ano) throws SQLException {
+String sql= "select  p.fecha_asignacion, COUNT(e.numero_expediente) canti, e.sexo from Form_administrativos p inner join Form_info_personal e where p.numero_expediente=e.numero_expediente and month(fecha_asignacion)=  %s and\n" +
+"                                                year(fecha_asignacion) = %s and e.sexo= 'M';";
+
+        sql= String.format(sql,mes,ano);
+        ResultSet rs= db.executeQuery(sql);
+        float resultado= 0;
+        rs.next();
+        resultado= rs.getFloat("canti") ;      
+        return resultado;
+
+    }
+             public static Float obtenerCantidadMujeres(int mes, int ano) throws SQLException {
+String sql= "select  p.fecha_asignacion, COUNT(e.numero_expediente) canti, e.sexo from Form_administrativos p inner join Form_info_personal e where p.numero_expediente=e.numero_expediente and month(fecha_asignacion)=  %s and\n" +
+"                                                year(fecha_asignacion) = %s and e.sexo= 'F';";
+        sql= String.format(sql,mes,ano);
+        ResultSet rs= db.executeQuery(sql);
+        float resultado= 0;
+        rs.next();
+        resultado= rs.getFloat("canti") ;      
+        return resultado;
+
+    }
+
 
     public static int updateUser(Usuario p) {
 String sql="update Usuarios set clave='%s', tipo= '%s' where id='%s'";

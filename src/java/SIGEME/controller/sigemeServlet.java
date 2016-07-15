@@ -234,6 +234,16 @@ public class sigemeServlet extends HttpServlet {
                      json= gson.toJson(ganancias);
                      out.write(json);
                      break;
+                     
+                       case "graficoSexo":
+                             for(float i=1; i<=12;i++){
+                     ganancias.add(i);
+                     ganancias.add(Model.obtenerCantidadHombres((int) i, 2016));
+                     ganancias.add(Model.obtenerCantidadMujeres((int) i, 2016));
+                     }
+                     json= gson.toJson(ganancias);
+                     out.write(json);
+                     break;
 
             }
         } catch (Exception e) {

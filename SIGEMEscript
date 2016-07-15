@@ -119,6 +119,7 @@ insert into Usuarios (id,clave,tipo) values ('003','003', 3);
 insert into Form_administrativos(numero_expediente,nombre,fecha_asignacion,cedula_trabajador,fechaEntrega) values(321,'pedrito','2016-10-05','001',curdate());
 insert into Form_administrativos(numero_expediente,nombre,fecha_asignacion,cedula_trabajador,fechaEntrega) values(325,'albertico',curdate(),'001',curdate());
 insert into Form_administrativos(numero_expediente,nombre,fecha_asignacion,cedula_trabajador,fechaEntrega) values(324,'pedrita',curdate(),'002',curdate());
+insert into Form_administrativos(numero_expediente,nombre,fecha_asignacion,cedula_trabajador,fechaEntrega) values(326,'ali',curdate(),'001',curdate());
 
 insert into Asesorias(numero_asesoria,lugar,fecha,tipo) values(25,'perez',curdate(),'normal');
 insert into Asesorias_Trabajadores(numero_asesoria,cedula_trabajador) values(25,'001');
@@ -133,11 +134,14 @@ insert into Asesorias_Trabajadores(numero_asesoria,cedula_trabajador) values(25,
 INSERT INTO `events` ( `title`, `description`, `color`, `date`) VALUES
 ( 'Event 5', 'Tds', '#f00877', now());  
 
-
-
+update Form_info_personal set cedula='11613006' where numero_expediente= 321 ;
+update Form_info_personal set sexo='M' where numero_expediente= 321 ;
+update Form_info_personal set sexo='F' where numero_expediente= 324 ;
+update Form_info_personal set sexo='M' where numero_expediente= 325 ;
+update Form_info_personal set sexo='M' where numero_expediente= 326 ;
 -- pruebas
 
-update Form_info_personal set cedula='11613006' where numero_expediente= 321 ;
+
 
 select  * from Form_administrativos;
 select  * from Form_info_personal;
@@ -146,3 +150,5 @@ select  * from Usuarios;
 select * from events where idTrabajador='001';
 select  p.nombre, e.numero_expediente from Form_administrativos p inner join Form_info_personal e where p.numero_expediente=e.numero_expediente;
 select  x.nombre, e.cedula_trabajador, p.numero_asesoria, p.lugar from Asesorias_Trabajadores e, Asesorias p, Trabajadores x where e.numero_asesoria= p.numero_asesoria and x.cedula= e.cedula_trabajador;
+
+select  p.fecha_asignacion, COUNT(e.numero_expediente), e.sexo from Form_administrativos p inner join Form_info_personal e where p.numero_expediente=e.numero_expediente and e.sexo= 'M';

@@ -29,7 +29,7 @@ public class NewClass {
 
 //Model.userLogin(usuario);
     
-    System.out.print(Model.getUser("001"));
+    System.out.print(Model.obtenerCantidadHombres(10,2016));
     } //Cierre del main
     
     
