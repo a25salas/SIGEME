@@ -30,10 +30,10 @@ public class Trabajador  implements Serializable, SIGEME.model.Jsonable {
     public String toString() {
         return "Trabajador{" + "nombre=" + nombre + ", email=" + email + ", cedula=" + cedula + ", fechaNacimiento=" + fechaNacimiento + ", telefono=" + telefono + ", puesto=" + puesto + ", sexo=" + sexo + ", profesion=" + profesion + ", fechaIngreso=" + fechaIngreso + '}';
     }
-    
-    
-    
-    
+
+
+
+
     private String nombre;
 
     Trabajador() {
@@ -224,5 +224,7 @@ public class Trabajador  implements Serializable, SIGEME.model.Jsonable {
     public void setCedula(String cedula) {
         this.cedula = cedula;
     }
+
+    //comentario prueba para Git :b 
 
 }
