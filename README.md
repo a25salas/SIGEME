@@ -1,3 +1,8 @@
 # sigeme-jsp
 
-esto es una prueba, hola
+pendientes:
+> pegar las asesorias
+> hacer mas graficos
+> exportar graficos
+> seguridad
+
