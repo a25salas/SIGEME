@@ -153,9 +153,7 @@
         <script type="text/javascript" src="js/plugins/fullcalendar/fullcalendar.min.js"></script>
         <!-- END THIS PAGE PLUGINS-->        
 
-        <!-- START TEMPLATE -->
-        <script type="text/javascript" src="js/settings.js"></script>
-        
+        <!-- START TEMPLATE -->        
         <script type="text/javascript" src="js/plugins.js"></script>        
         <script type="text/javascript" src="js/actions.js"></script>        
         <!-- END TEMPLATE -->

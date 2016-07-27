@@ -494,8 +494,6 @@ app.controller('ManagerCasosController', function($scope) {
         <!-- END PAGE PLUGINS -->
 
         <!-- START TEMPLATE -->
-        <script type="text/javascript" src="js/settings.js"></script>
-        
         <script type="text/javascript" src="js/plugins.js"></script>        
         <script type="text/javascript" src="js/actions.js"></script>        
         <!-- END TEMPLATE -->
