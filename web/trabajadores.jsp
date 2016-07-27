@@ -104,17 +104,17 @@
                                                 </div>
                                             </div>
                                             <div class="form-group">
-                                  <div class="col-md-12">
-                                                <label>Simple</label><br>
-                                                <span class="file-input file-input-new"><div class="file-preview ">
-   <div class="close fileinput-remove text-right">×</div>
-   <div class="file-preview-thumbnails"></div>
-   <div class="clearfix"></div>   <div class="file-preview-status text-center text-success"></div>
-</div>
-<button class="btn btn-default fileinput-remove fileinput-remove-button" type="button"><i class="glyphicon glyphicon-ban-circle"></i> Remove</button>
+                                             <div class="col-md-12">
+                                                <label>Cambiar imagen del usuario </label><br>
+                                                                                            <span class="file-input file-input-new"><div class="file-preview ">
+                                               <div class="close fileinput-remove text-right">×</div>
+                                               <div class="file-preview-thumbnails"></div>
+                                               <div class="clearfix"></div>   <div class="file-preview-status text-center text-success"></div>
+                                            </div>
+                                            <button class="btn btn-default fileinput-remove fileinput-remove-button" type="button"><i class="glyphicon glyphicon-ban-circle"></i> Remove</button>
 
-<div class="btn btn-danger btn-file"> <i class="glyphicon glyphicon-folder-open"></i> &nbsp;Browse ? <input type="file" id="file-simple" multiple=""></div>
-</span>
+                                            <div class="btn btn-danger btn-file"> <i class="glyphicon glyphicon-folder-open"></i>Browse  <input type="file" id="file-simple" multiple=""></div>
+                                             </span>
                                             </div>
                                             </div>
                                             
