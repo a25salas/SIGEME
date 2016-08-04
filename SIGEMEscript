@@ -128,7 +128,7 @@ CREATE TABLE events (
   description text NOT NULL,
    color varchar(7) NOT NULL DEFAULT '#3a87ad',
   `date` datetime NOT NULL,
-  idTrabajador varchar(20) NOT NULL DEFAULT 'general',
+  idTrabajador varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
@@ -171,6 +171,10 @@ Alter table Asesorias_Trabajadores ADD constraint Asesorias_Trabajadores_fk1
 
 Alter table Asesorias_Trabajadores ADD constraint Asesorias_Trabajadores_fk2
 	foreign key (numero_asesoria) references Asesorias(numero_asesoria);
+    
+
+Alter table events ADD constraint events_fk1
+	foreign key (idTrabajador) references Trabajadores(cedula);
 
 -- triggers y funciones
 		DELIMITER $$
@@ -242,7 +246,8 @@ select  * from Form_datos_demograficos;
 select  * from Trabajadores;
 select  * from Usuarios;
 select * from Asesorias;
-select * from events where idTrabajador='001';
+select * from events ;
+select * from events where idTrabajador is NULL;
 select  p.nombre, e.numero_expediente from Form_administrativos p inner join Form_info_personal e where p.numero_expediente=e.numero_expediente;
 select  x.nombre, e.cedula_trabajador, p.numero_asesoria, p.lugar from Asesorias_Trabajadores e, Asesorias p, Trabajadores x where e.numero_asesoria= p.numero_asesoria and x.cedula= e.cedula_trabajador;
 
