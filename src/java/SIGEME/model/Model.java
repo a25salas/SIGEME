@@ -330,7 +330,7 @@ int count= db.executeUpdate(sql);
         LinkedList<CalendarDTO> resultado;
          resultado = new LinkedList<>();
         try{
-        String sql = "select * from events where idTrabajador='general'";
+        String sql = "select * from events where idTrabajador is NULL";
         ResultSet rs= db.executeQuery(sql);
         while(rs.next()){
         resultado.add(toCalendarDTO(rs));}        
