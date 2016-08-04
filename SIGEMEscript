@@ -22,6 +22,8 @@ create table Usuarios (
     PRIMARY KEY (id)
 ) ENGINE=InnoDB;
 
+-- formularios
+
 create table Form_administrativos (
     numero_expediente int not null AUTO_INCREMENT ,
     nombre varchar(40) not null,
@@ -43,6 +45,66 @@ create table Form_info_personal (
     PRIMARY KEY (numero_expediente)
 ) ENGINE=InnoDB;
 
+create table Form_datos_demograficos (
+    numero_expediente int not null,
+	region varchar(40),
+    provincia varchar(40),
+    canton varchar(30),
+	distrito varchar(40),
+    PRIMARY KEY (numero_expediente)
+) ENGINE=InnoDB;
+
+create table Form_datos_laborales (
+    numero_expediente int not null,
+	estadoDeTrabajo varchar(4),
+    ocupacion varchar(40),
+    esTrabajoFamiliar varchar(30),
+	tareas varchar(40),
+	tipoTrabajo varchar(40),
+    criterioTipoTrabajo varchar(30),
+	esRemunerado varchar(40),
+    salario varchar(40),
+	jornadaDiaria varchar(40),
+    cantidadDias varchar(30),
+	derechosLaborales varchar(40),
+    PRIMARY KEY (numero_expediente)
+) ENGINE=InnoDB;
+
+create table Form_datos_familiares (
+    numero_expediente int not null,
+	cantidadMiembros int,
+    ingresoMensualTotal float,
+    lineaPobreza varchar(30),
+	tipoZona varchar(40),
+	retiro varchar(40),
+    PRIMARY KEY (numero_expediente)
+) ENGINE=InnoDB;
+
+create table Form_datos_educativos (
+    numero_expediente int not null,
+	ultimoNivelAprobado int,
+    esActivo varchar(30),
+	nivelActual varchar(40),
+	centroEducativo varchar(40),
+    contactoCentroEducativo varchar(40),
+    PRIMARY KEY (numero_expediente)
+) ENGINE=InnoDB;
+
+
+create table Form_datos_entrevista(
+    numero_expediente int not null,
+	fechaEntrevista date,
+    lugar varchar(30),
+	fuenteDeInformacion varchar(40),
+	referenciaDeInformacion varchar(40),
+    instanciaDondeRefieren varchar(40),
+    PRIMARY KEY (numero_expediente)
+) ENGINE=InnoDB;
+
+
+
+-- fin formularios
+
 create table Asesorias (
     numero_asesoria int not null AUTO_INCREMENT,
 	lugar varchar(20),
@@ -61,10 +123,10 @@ create table Asesorias_Trabajadores(
 -- si tiene un ID solo podria ser visible por ese trabajdor como el caso de los casos 
 
 CREATE TABLE events (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) NOT NULL,
-  `description` text NOT NULL,
-  `color` varchar(7) NOT NULL DEFAULT '#3a87ad',
+  id int(11) NOT NULL AUTO_INCREMENT,
+  title varchar(255) NOT NULL,
+  description text NOT NULL,
+   color varchar(7) NOT NULL DEFAULT '#3a87ad',
   `date` datetime NOT NULL,
   idTrabajador varchar(20) NOT NULL DEFAULT 'general',
   PRIMARY KEY (`id`)
@@ -80,6 +142,27 @@ Alter table Form_info_personal
 	ADD constraint Form_info_personal_fk1
 	foreign key (numero_expediente) references Form_administrativos(numero_expediente);
 
+Alter table Form_datos_demograficos
+	ADD constraint Form_datos_demograficos_fk1
+	foreign key (numero_expediente) references Form_administrativos(numero_expediente);
+    
+Alter table Form_datos_laborales
+	ADD constraint Form_datos_laborales_fk1
+	foreign key (numero_expediente) references Form_administrativos(numero_expediente);
+
+Alter table Form_datos_familiares
+	ADD constraint Form_datos_familiares_fk1
+	foreign key (numero_expediente) references Form_administrativos(numero_expediente);
+    
+Alter table Form_datos_educativos
+	ADD constraint Form_datos_educativos_fk1
+	foreign key (numero_expediente) references Form_administrativos(numero_expediente);
+
+Alter table Form_datos_entrevista
+	ADD constraint Form_datos_entrevista_fk1
+	foreign key (numero_expediente) references Form_administrativos(numero_expediente);
+
+    
 Alter table Usuarios ADD constraint Usuarios_fk1
 	foreign key (id) references Trabajadores(cedula);
 
@@ -98,6 +181,16 @@ Alter table Asesorias_Trabajadores ADD constraint Asesorias_Trabajadores_fk2
 		VALUES(NEW.nombre,NEW.numero_expediente,NEW.fechaEntrega,NEW.cedula_trabajador);
         INSERT INTO Form_info_personal(numero_expediente,cedula,fecha_nacimiento,sexo,telefono)
 		VALUES(NEW.numero_expediente,"",curdate(),"","");
+		INSERT INTO Form_datos_demograficos(numero_expediente)
+		VALUES(NEW.numero_expediente);
+		INSERT INTO Form_datos_laborales(numero_expediente)
+		VALUES(NEW.numero_expediente);
+        INSERT INTO Form_datos_familiares(numero_expediente)
+		VALUES(NEW.numero_expediente);
+		INSERT INTO Form_datos_educativos(numero_expediente)
+		VALUES(NEW.numero_expediente);
+        INSERT INTO Form_datos_entrevista(numero_expediente)
+		VALUES(NEW.numero_expediente);
          END; $$
          DELIMITER ;
 		
@@ -143,9 +236,9 @@ update Form_info_personal set sexo='M' where numero_expediente= 4 ;
 -- pruebas
 
 
-
 select  * from Form_administrativos;
 select  * from Form_info_personal;
+select  * from Form_datos_demograficos;
 select  * from Trabajadores;
 select  * from Usuarios;
 select * from Asesorias;
