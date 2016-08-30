@@ -98,6 +98,7 @@ create table Form_datos_entrevista(
 	fuenteDeInformacion varchar(40),
 	referenciaDeInformacion varchar(40),
     instanciaDondeRefieren varchar(40),
+    observaciones varchar(40),
     PRIMARY KEY (numero_expediente)
 ) ENGINE=InnoDB;
 
